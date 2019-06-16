@@ -8,10 +8,10 @@
 import Foundation
 import SwiftyMath
 
-public protocol BilinearFormType: MapType, VectorSpace
+public protocol BilinearFormType: MapType, Module
     where Domain: ProductSetType,
-    Domain.Left: VectorSpace,
-    Domain.Right: VectorSpace,
+    Domain.Left: Module,
+    Domain.Right: Module,
     Codomain == CoeffRing,
     CoeffRing == Domain.Left.CoeffRing,
     CoeffRing == Domain.Right.CoeffRing
@@ -66,9 +66,9 @@ public extension BilinearFormType where Domain.Left: FiniteDimVectorSpace, Domai
     }
 }
 
-public struct BilinearForm<V1: VectorSpace, V2: VectorSpace>: BilinearFormType where V1.CoeffRing == V2.CoeffRing {
+public struct BilinearForm<V1: Module, V2: Module>: BilinearFormType where V1.CoeffRing == V2.CoeffRing {
     public typealias CoeffRing = V1.CoeffRing
-    public typealias Domain = ProductVectorSpace<V1, V2>
+    public typealias Domain = ProductModule<V1, V2>
     public typealias Codomain = CoeffRing
     
     private let fnc: (Domain) -> Codomain
@@ -76,7 +76,7 @@ public struct BilinearForm<V1: VectorSpace, V2: VectorSpace>: BilinearFormType w
         self.fnc = fnc
     }
     
-    public func applied(to v: ProductVectorSpace<V1, V2>) -> Codomain {
+    public func applied(to v: ProductModule<V1, V2>) -> Codomain {
         return fnc(v)
     }
 }

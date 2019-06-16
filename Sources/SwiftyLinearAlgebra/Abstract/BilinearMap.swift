@@ -8,11 +8,11 @@
 import Foundation
 import SwiftyMath
 
-public protocol BilinearMapType: MapType, VectorSpace
+public protocol BilinearMapType: MapType, Module
     where Domain: ProductSetType,
-    Domain.Left: VectorSpace,
-    Domain.Right: VectorSpace,
-    Codomain: VectorSpace,
+    Domain.Left: Module,
+    Domain.Right: Module,
+    Codomain: Module,
     CoeffRing == Domain.Left.CoeffRing,
     CoeffRing == Domain.Right.CoeffRing,
 CoeffRing == Codomain.CoeffRing {
@@ -51,17 +51,17 @@ public extension BilinearMapType {
     }
 }
 
-public struct BilinearMap<V1: VectorSpace, V2: VectorSpace, W: VectorSpace>: BilinearMapType where V1.CoeffRing == V2.CoeffRing, V1.CoeffRing == W.CoeffRing {
+public struct BilinearMap<V1: Module, V2: Module, W: Module>: BilinearMapType where V1.CoeffRing == V2.CoeffRing, V1.CoeffRing == W.CoeffRing {
     public typealias CoeffRing = V1.CoeffRing
-    public typealias Domain = ProductVectorSpace<V1, V2>
+    public typealias Domain = ProductModule<V1, V2>
     public typealias Codomain = W
     
-    private let fnc: (ProductVectorSpace<V1, V2>) -> W
-    public init(_ fnc: @escaping (ProductVectorSpace<V1, V2>) -> W) {
+    private let fnc: (ProductModule<V1, V2>) -> W
+    public init(_ fnc: @escaping (ProductModule<V1, V2>) -> W) {
         self.fnc = fnc
     }
     
-    public func applied(to v: ProductVectorSpace<V1, V2>) -> W {
+    public func applied(to v: ProductModule<V1, V2>) -> W {
         return fnc(v)
     }
 }
