@@ -26,3 +26,22 @@ extension Matrix: VectorSpace, FiniteDimVectorSpace where R: Field, n: StaticSiz
     }
 }
 
+extension Matrix where n: StaticSizeType, m: StaticSizeType {
+    public static var standardInnerProduct: BilinearForm<Matrix<n, m, R>, Matrix<n, m, R>> {
+        return BilinearForm { (A, B) -> R in
+            A.nonZeroComponents.sum { (i, j, a) -> R in
+                a * B[i, j]
+            }
+        }
+    }
+}
+
+extension Matrix where n: StaticSizeType, m: StaticSizeType, R == 𝐂 {
+    public static var standardHermitianProduct: BilinearForm<Matrix<n, m, R>, Matrix<n, m, R>> {
+        return BilinearForm { (A, B) -> R in
+            A.nonZeroComponents.sum { (i, j, a) -> R in
+                a.conjugate * B[i, j]
+            }
+        }
+    }
+}
