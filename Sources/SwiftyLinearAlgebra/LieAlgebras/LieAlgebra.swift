@@ -28,12 +28,12 @@ public func bracket<𝔤: LieAlgebra>(_ X: 𝔤, _ Y: 𝔤) -> 𝔤 {
 }
 
 public protocol FiniteDimLieAlgebra: LieAlgebra, FiniteDimVectorSpace {
-    static var killingForm: BilinearForm<Self> { get }
+    static var killingForm: BilinearForm<Self, Self> { get }
 }
 
 extension FiniteDimLieAlgebra {
     // B(X, Y) = tr(ad(X) ∘ ad(Y))
-    public static var killingForm: BilinearForm<Self> {
+    public static var killingForm: BilinearForm<Self, Self> {
         let ad = adjointRepresentation
         fatalError()
 //        return BilinearForm<Self> { (X: Self, Y: Self) -> CoeffRing in
