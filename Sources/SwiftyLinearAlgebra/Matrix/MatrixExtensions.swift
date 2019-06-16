@@ -8,6 +8,38 @@
 import Foundation
 import SwiftyMath
 
+extension Matrix where n == m, n: StaticSizeType {
+    public var isDiagonal: Bool {
+        return self.nonZeroComponents.allSatisfy{ c in c.col == c.row }
+    }
+    
+    public var isSymmetric: Bool {
+        if rows <= 1 {
+            return true
+        }
+        return (0 ..< rows - 1).allSatisfy { i in
+            (i + 1 ..< cols).allSatisfy { j in
+                self[i, j] == self[j, i]
+            }
+        }
+    }
+    
+    public var isSkewSymmetric: Bool {
+        if rows <= 1 {
+            return isZero
+        }
+        return (0 ..< rows - 1).allSatisfy { i in
+            (i + 1 ..< cols).allSatisfy { j in
+                self[i, j] == -self[j, i]
+            }
+        }
+    }
+    
+    public var isOrthogonal: Bool {
+        return self.transposed * self == .identity
+    }
+}
+
 public extension SquareMatrix where n == m, n: StaticSizeType, R == 𝐂 {
     var isHermitian: Bool {
         if rows <= 1 {
