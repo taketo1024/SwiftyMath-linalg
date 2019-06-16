@@ -24,6 +24,17 @@ class CharacteristicPolynomialTests: XCTestCase {
         XCTAssertTrue(f.evaluate(at: A).isZero) // Cayley-Hamilton thm
     }
     
+    func testEigenValues() {
+        let A = M<_4, 𝐂>(
+            -2, -7, 2, -5,
+            1, 2, 0, 1,
+            3, 7, -1, 5,
+            1, 3, -1, 3
+        )
+        let evs = A.characteristicPolynomial.findAllRoots()
+        XCTAssertEqual(Set(evs), Set([0, 0, 1, 1]))
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {

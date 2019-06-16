@@ -21,3 +21,11 @@ public extension Matrix where n == m, n: StaticSizeType {
         return characteristicMatrix.determinant
     }
 }
+
+public extension Matrix where n == m, n: StaticSizeType, R: ComplexSubset {
+    var eigenValues: [𝐂] {
+        let vals = characteristicPolynomial.asComplex.findAllRoots()
+        assert(vals.count == self.rows)
+        return vals
+    }
+}
