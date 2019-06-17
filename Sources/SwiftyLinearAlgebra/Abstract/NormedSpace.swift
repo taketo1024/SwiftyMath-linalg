@@ -40,10 +40,10 @@ extension 𝐇: NormedSpace {
 
 extension Matrix: NormedSpace where R: NormedSpace {
     public var norm: 𝐑 {
-        return √( sum { (_, _, a) in a.norm.pow(2) } )
+        return √( nonZeroComponents.sum { (_, _, a) in a.norm.pow(2) } )
     }
     
     public var maxNorm: 𝐑 {
-        return self.map { $0.2.norm }.max() ?? 𝐑.zero
+        return nonZeroComponents.map { $0.2.norm }.max() ?? 𝐑.zero
     }
 }
