@@ -11,7 +11,7 @@ let package = Package(
             targets: ["SwiftyLinearAlgebra"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/taketo1024/SwiftyMath.git", .exact("1.0.10")),
+        .package(url: "https://github.com/taketo1024/SwiftyMath.git", .exact("1.0.14")),
     ],
     targets: [
         .target(
